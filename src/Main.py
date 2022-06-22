@@ -34,7 +34,12 @@ class Main():
             self._display.process_menu(event)
         
     def button_pressed(self, event) -> None:
-        if self._display.search_button("QUIT", "menu").process_event(event) and self._display.search_button("QUIT", "menu").is_enabled: self._is_running=False
-        elif self._display.search_button("START", "menu").process_event(event) and self._display.search_button("START", "menu").is_enabled: self._display.disable_scene("menu")
+        if self.is_okay_button_pressed("QUIT", "menu", event): self._is_running=False
+        elif self.is_okay_button_pressed("START", "menu", event): self._display.disable_scene("menu")
+        elif self.is_okay_button_pressed("SETTINGS", "menu", event): self._display.enable_scene("settings")
+
+    def is_okay_button_pressed(self, button_name: str, scene_name: str, event: pygame.event):
+        button = self._display.search_button(button_name, scene_name)
+        return button.process_event(event) and button.is_enabled
 
 m=Main()

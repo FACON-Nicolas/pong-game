@@ -13,6 +13,7 @@ class Display:
         self._menu_scene = Scene('resources/wallpaper.jpg', 'resources/menu_scene.json', width, height)
         self._scenes = [self._menu_scene]
         self._menu_scene.enable()
+        self._last_name_scene = "menu"
 
     def process_menu(self, event):
         self._menu_scene.process_scene(event)
