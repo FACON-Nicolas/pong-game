@@ -1,1 +1,4 @@
-{ "buttons": ["menu.300.500.150.50"], "labels":[], "sliders":[] }
+{ 
+    "buttons": ["START.650.412.300.75", "SETTINGS.650.502.300.75", "QUIT.650.592.300.75"], 
+    "labels":["PONG-GAME"], 
+    "sliders":[] }
