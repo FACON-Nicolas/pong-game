@@ -1,4 +1,5 @@
 import json
+from time import time
 from xml.dom import NotFoundErr
 import pygame
 import pygame_gui
@@ -71,8 +72,8 @@ class Scene:
             self._manager.process_events(event)
 
     def update_scene(self, window: pygame.Surface) -> None:
-        if (self._is_enabled): 
-            window.blit(self._background, self._background.get_rect())
+        if (self._is_enabled):
+            window.blit(self._background, self._rect)
             for l in self._labels: window.blit(l._text, l.rect)
             self._manager.update(1)
             self._manager.draw_ui(window)
@@ -82,13 +83,13 @@ class Scene:
             if b.text==txt: return b
         raise NotFoundErr("the button searched does not exist.")
 
-    def disable(self):
+    def disable(self) -> None:
         if not self._is_enabled: raise ValueError("The Scene is already disabled")
         for b in self._buttons:
             b.disable()
         self.set_enabled(False)
 
-    def enable(self):
+    def enable(self) -> None:
         for b in self._buttons:
             b.enable()
         self.set_enabled(True)

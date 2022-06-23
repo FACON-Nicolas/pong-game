@@ -1,5 +1,6 @@
 from xml.dom import NotFoundErr
 import pygame
+import pygame_gui
 from Scene import Scene
 
 class Display:
@@ -7,6 +8,7 @@ class Display:
     scene_names = ['menu', 'settings', 'pause', 'main']
 
     def __init__(self, width: int, height: int) -> None:
+        pygame.display.init()
         self._height = height
         self._width = width
         self._surface = pygame.display.set_mode((width, height))
@@ -15,13 +17,13 @@ class Display:
         self._menu_scene.enable()
         self._last_name_scene = "menu"
 
-    def process_menu(self, event):
+    def process_menu(self, event) -> None:
         self._menu_scene.process_scene(event)
 
-    def update_menu(self):
+    def update_menu(self) -> None:
         self._menu_scene.update_scene(self._surface)
 
-    def search_button(self, txt: str, scene_name: Scene=None):
+    def search_button(self, txt: str, scene_name: Scene=None) -> pygame_gui.elements.UIButton:
         if Scene is None: return self._search_button(txt)
         if scene_name not in Display.scene_names:
             raise ValueError("This scene does not exist")
@@ -31,7 +33,7 @@ class Display:
         if scene_name=="main": pass
 
 
-    def _search_button(self, txt: str):
+    def _search_button(self, txt: str) -> pygame_gui.elements.UIButton:
         for s in self._scenes:
             try:
                 return s.get_specific_button(txt)

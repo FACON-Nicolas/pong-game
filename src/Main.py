@@ -2,29 +2,33 @@ __author__ = 'FACON Nicolas'
 __version__ = '1.0.0'
 __date__ = '2022-06-20'
 
+from time import time
 import pygame
 from pygame.locals import *
 from pygame_gui._constants import *
 from Display import Display
+from AbstractPlayer import AbstractPlayer
 
 UI_BUTTON_PRESSED = 1025 # pygame_gui.UI_BUTTON_PRESSED doesn't work anymore, so I gave it a value
+delta = 0
 
 class Main():
 
     clock = pygame.time.Clock()
+    delta = 0
     
     def __init__(self) -> None:
-        Main.clock.tick(60)
         self._display = Display(1600, 900)
         self._is_running = True
         self.run()
 
     def run(self):
         while self._is_running:
+            t = time()
             self.event()
-            self._display.show(pygame.image.load('resources/wallpaper.jpg').convert(), (0,0))
             self._display.update_menu()
             pygame.display.flip()
+            Main.delta = time() - t
 
     def event(self):
         for event in pygame.event.get():
