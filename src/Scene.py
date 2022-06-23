@@ -1,5 +1,4 @@
 import json
-from time import time
 from xml.dom import NotFoundErr
 import pygame
 import pygame_gui
@@ -62,10 +61,10 @@ class Scene:
     def from_str_to_slider(self, slider_infos: str) -> pygame_gui.elements.UIHorizontalSlider:
         pass
 
-    def from_str_to_label(self, label_infos: tuple) -> pygame_gui.elements.UILabel:
-        text_, x, y, s, pos = label_infos.split('.')
-        x, y, s, pos = int(x), int(y), int(s), int(pos)
-        return Label(text_, s, self._width, self._height, x, y, pos)
+    def from_str_to_label(self, label_infos: str) -> pygame_gui.elements.UILabel:
+        text_, x, y, s, pos, visibility = label_infos.split('.')
+        x, y, s, pos, visibility = int(x), int(y), int(s), int(pos), bool(int(visibility))
+        return Label(text_, s, self._width, x, y, pos, visibility)
 
     def process_scene(self, event: pygame.event) -> None:
         if (self._is_enabled): 
@@ -74,7 +73,7 @@ class Scene:
     def update_scene(self, window: pygame.Surface) -> None:
         if (self._is_enabled):
             window.blit(self._background, self._rect)
-            for l in self._labels: window.blit(l._text, l.rect)
+            for l in self._labels: l.update(window)
             self._manager.update(1)
             self._manager.draw_ui(window)
 

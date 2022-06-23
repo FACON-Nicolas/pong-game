@@ -1,6 +1,8 @@
 from xml.dom import NotFoundErr
 import pygame
 import pygame_gui
+from AbstractPlayer import AbstractPlayer
+from Ball import Ball
 from Scene import Scene
 
 class Display:
@@ -13,12 +15,15 @@ class Display:
         self._width = width
         self._surface = pygame.display.set_mode((width, height))
         self._menu_scene = Scene('resources/wallpaper.jpg', 'resources/menu_scene.json', width, height)
-        self._scenes = [self._menu_scene]
+        self._main_scene = Scene('resources/main_bg.png', 'resources/main_scene.json', width, height)
+        self._scenes = [self._menu_scene, self._main_scene]
+        self._ball = Ball(800, 425, 500, 1600, 900)
         self._menu_scene.enable()
-        self._last_name_scene = "menu"
 
-    def process_menu(self, event) -> None:
-        self._menu_scene.process_scene(event)
+    def process(self, event: pygame.surface) -> None:
+        for s in self._scenes:
+            if(s.is_enabled()):
+                s.process_scene(event)
 
     def update_menu(self) -> None:
         self._menu_scene.update_scene(self._surface)
@@ -56,7 +61,13 @@ class Display:
         if scene_name=="menu": self._menu_scene.enable()
         if scene_name=="pause": pass
         if scene_name=="settings": pass
-        if scene_name=="main": pass
+        if scene_name=="main": self._main_scene.enable()
 
     def show(self, object: pygame.Surface, position: tuple) -> None:
         self._surface.blit(object, position)
+
+    def update(self, delta_time, players) -> None:
+        for s in self._scenes:
+            s.update_scene(self._surface)
+        if (self._main_scene.is_enabled()):
+            self._ball.update(delta_time, self._surface, players)

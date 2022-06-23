@@ -5,6 +5,8 @@ from typing import overload
 
 import pygame
 
+from Ball import Ball
+
 class AbstractPlayer(ABC):
 
     pong_path = "resources/pong.png"
@@ -31,7 +33,7 @@ class AbstractPlayer(ABC):
         value_to_add = (sens * delta_time * AbstractPlayer.speed)
         if (min < self._rect.y + value_to_add < max): self._rect.y += value_to_add
 
-    def isCollidingObject(self, object: pygame.Surface) -> bool:
-        rect = object.get_rect()
-        x, y = abs((self._rect.x-rect.x)**2), abs((self._rect.y-rect.y)**2)
+    def isCollidingObject(self, object: Ball) -> bool:
+        rect = object.rect
+        x, y = abs(self._rect.x-rect.x), abs(self._rect.y-rect.y)
         return x < self._rect.w and y < self._rect.h
