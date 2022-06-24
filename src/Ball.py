@@ -53,6 +53,7 @@ class Ball:
         ac = ab*sin(alpha)
         bc = sqrt(ac**2+ab**2)
         if is_collinding_player: self._vx = bc
-        else: self._vy = -bc
+        else: 
+            self._vy = bc if self._vy < 0 else -bc
 
 

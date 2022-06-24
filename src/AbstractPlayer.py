@@ -10,7 +10,7 @@ from Ball import Ball
 class AbstractPlayer(ABC):
 
     pong_path = "resources/pong.png"
-    speed = 4
+    speed = 350
 
     def __init__(self) -> None:
         AbstractPlayer.create_pong()
@@ -21,17 +21,19 @@ class AbstractPlayer(ABC):
     @staticmethod
     def create_pong() -> None:
         if not os.path.exists(AbstractPlayer.pong_path):
-            window_tmp = pygame.Surface((20, 80))
-            pygame.draw.rect(window_tmp, (200,200,200), pygame.Rect(0, 0, 20, 80))
+            window_tmp = pygame.Surface((20, 120))
+            pygame.draw.rect(window_tmp, (55, 55, 55), pygame.Rect(0, 0, 20, 120))
             pygame.image.save(window_tmp, AbstractPlayer.pong_path)
 
     def update_score(self, value: int=1) -> None:
         if value <= 0: raise ValueError("value must be greater than 0.")
         self._score += value
 
-    def move_pong(self, sens: int, delta_time: float, max: int, min: int) -> None:
+    def move_pong(self, sens: int, delta_time: float, min: int, max: int) -> None:
         value_to_add = (sens * delta_time * AbstractPlayer.speed)
-        if (min < self._rect.y + value_to_add < max): self._rect.y += value_to_add
+        if (min <= self._rect.y + value_to_add <= max - self._rect.h): 
+            self._rect.y += value_to_add
+        print(self._rect.y, value_to_add, min, "<=" ,self._rect.y + value_to_add, "<=", max)
 
     def isCollidingObject(self, object: Ball) -> bool:
         rect = object.rect
