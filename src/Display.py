@@ -3,6 +3,7 @@ import pygame
 import pygame_gui
 from AbstractPlayer import AbstractPlayer
 from Ball import Ball
+from Human import Human
 from Scene import Scene
 
 class Display:
@@ -18,6 +19,8 @@ class Display:
         self._main_scene = Scene('resources/main_bg.png', 'resources/main_scene.json', width, height)
         self._scenes = [self._menu_scene, self._main_scene]
         self._ball = Ball(800, 425, 500, 1600, 900)
+        self._human = Human()
+        self._ai = Human()
         self._menu_scene.enable()
 
     def process(self, event: pygame.surface) -> None:

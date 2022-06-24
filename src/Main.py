@@ -21,8 +21,6 @@ class Main():
     def __init__(self) -> None:
         self._display = Display(1600, 900)
         self._is_running = True
-        self._human = Human()
-        self._ai = Human()
         self.run()
 
     def run(self) -> None:

@@ -37,3 +37,6 @@ class AbstractPlayer(ABC):
         rect = object.rect
         x, y = abs(self._rect.x-rect.x), abs(self._rect.y-rect.y)
         return x < self._rect.w and y < self._rect.h
+
+    def center_y(self):
+        return self._rect.y + (self._rect.h // 2)
