@@ -1,8 +1,6 @@
 from abc import ABC
 from cmath import sqrt
 import os
-from typing import overload
-
 import pygame
 
 from Ball import Ball
@@ -10,7 +8,7 @@ from Ball import Ball
 class AbstractPlayer(ABC):
 
     pong_path = "resources/pong.png"
-    speed = 350
+    speed = 500
 
     def __init__(self) -> None:
         AbstractPlayer.create_pong()
@@ -33,12 +31,15 @@ class AbstractPlayer(ABC):
         value_to_add = (sens * delta_time * AbstractPlayer.speed)
         if (min <= self._rect.y + value_to_add <= max - self._rect.h): 
             self._rect.y += value_to_add
-        print(self._rect.y, value_to_add, min, "<=" ,self._rect.y + value_to_add, "<=", max)
+        #print(self._rect.y, value_to_add, min, "<=" ,self._rect.y + value_to_add, "<=", max)
 
-    def isCollidingObject(self, object: Ball) -> bool:
+    def is_collinding_object(self, object: Ball) -> bool:
         rect = object.rect
         x, y = abs(self._rect.x-rect.x), abs(self._rect.y-rect.y)
         return x < self._rect.w and y < self._rect.h
 
     def center_y(self):
         return self._rect.y + (self._rect.h // 2)
+
+    def get_score(self):
+        return self._score

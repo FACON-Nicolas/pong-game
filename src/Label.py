@@ -27,7 +27,7 @@ class Label():
         self.rect.y = self._y
 
     def set_text(self, text: str) -> None:
-        self._text = text
+        self.init(text)
         self.init_pos(self._width)
 
     def update(self, window: pygame.Surface):

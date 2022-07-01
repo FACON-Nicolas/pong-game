@@ -20,7 +20,7 @@ class Display:
         self._main_scene = Scene('resources/main_bg.png', 'resources/main_scene.json', width, height)
         self._pause_scene = Scene('resources/main_bg.png', 'resources/pause_scene.json', width, height)
         self._scenes = [self._menu_scene, self._main_scene, self._pause_scene]
-        self._ball = Ball(800, 425, 500, 1600, 900)
+        self._ball = Ball(800, 425, Ball.DEFAULT_SPEED, 1600, 900)
         self._human = Human()
         self._ai = ArtificialPlayer(self._ball, self._surface)
         self._menu_scene.enable()
@@ -73,14 +73,14 @@ class Display:
         self._surface.blit(object, position)
 
     def update(self, delta_time, key: pygame.key) -> None:
-        for s in self._scenes:
-            s.update_scene(self._surface)
-        if (self._main_scene.is_enabled()):
-            self._ball.update(delta_time, self._surface, [self._human, self._ai])
+        print(self._ball._collide)
+        self.update_scenes()
+        self.update_ball_and_players(delta_time, key)
 
-        if (self._main_scene.is_enabled()):
-            self._human.update(key, delta_time, 0, self._surface.get_rect().h, self._surface)
-            self._ai.update(self._surface)
+
+        #if self._ball.x >= 1600: self._human.update_score()
+        #elif self._ball.x == 0: self._ai.update_score()
+        #self._main_scene._labels[0].set_text(str(self._human.get_score()) + '-' + str(self._ai.get_score()))
 
     def is_scene_enabled(self, scene_name: str) -> bool:
         if scene_name not in Display.scene_names:
@@ -89,3 +89,13 @@ class Display:
         if scene_name=="pause": return self._pause_scene.is_enabled()
         if scene_name=="settings": pass
         if scene_name=="main": return self._main_scene.is_enabled()
+
+    def update_scenes(self):
+        for s in self._scenes:
+            s.update_scene(self._surface)
+
+    def update_ball_and_players(self, delta_time: float, key: pygame.key):
+        if (self._main_scene.is_enabled()):
+            self._ball.update(delta_time, self._surface, [self._human, self._ai])
+            self._human.update(key, delta_time, 0, self._surface.get_rect().h, self._surface)
+            self._ai.update(self._surface, delta_time)
