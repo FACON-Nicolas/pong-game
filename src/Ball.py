@@ -9,15 +9,22 @@ class Ball:
         self._speed = speed
         self._ball = pygame.transform.scale(pygame.image.load('resources/ball.png').convert_alpha(), (50, 50))
         self.rect = self._ball.get_rect()
-        self._vx = -1.1
-        self._vy = 1.1
+        self._vx = -1
+        self._vy = 1
         self._min = 0
         self.rect.x = x
         self.rect.y = y
         self._max_x = max_x
         self._max_y = max_y
         self._collide = None
+        self._goal = False
 
+    def reset(self, x: int, window: pygame.Surface):
+        self.rect.x = window.get_rect().w / 2
+        self.rect.y = window.get_rect().h / 2
+        self._collide = None
+        self._vx = 1 if x < window.get_rect().w / 2 else -1
+        self._vy = 1 if x < window.get_rect().h / 2 else -1
 
     def move(self, delta_time: float):
         self.rect.x += (delta_time * self._vx * self._speed)
@@ -31,6 +38,13 @@ class Ball:
         self.show_ball(window)
         if self.collide_wall(): self.bounce()
         if self.collide_player(players): self.bounce(self.collide_player(players))
+        if (self.goal()):
+            if self.rect.x < window.get_rect().w / 2: players[1].update_score()
+            else: players[0].update_score()
+            self.reset(self.rect.x, window)
+            self._goal = True
+
+
 
     def collide_wall(self):
         return self.rect.y <= 0 or self.rect.y + self.rect.h >= self._max_y
@@ -43,7 +57,7 @@ class Ball:
         return player
 
     def goal(self):
-        return self.rect.x <= 0 or self.rect.x + self.rect.w >= self._max_x
+        return self.rect.x+self.rect.w < 0 or self.rect.x >= self._max_x
 
     def bounce(self, player=None):
         if (self.is_collide_okay()):

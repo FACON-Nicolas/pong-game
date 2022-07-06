@@ -8,7 +8,6 @@ from time import time as time_
 from pygame.locals import *
 from pygame_gui._constants import *
 from Display import Display
-from Human import Human
 
 UI_BUTTON_PRESSED = 1025 # pygame_gui.UI_BUTTON_PRESSED doesn't work anymore, so I gave it a value
 delta = 0
@@ -28,15 +27,15 @@ class Main():
         clock = pygame.time.Clock()
         t = time_()
         while self._is_running:
-            clock.tick(60)
+            clock.tick(100)
             self.update_delta(t)
             t = time_()
             self.event()
             self.update()
             self._display.update(Main.delta, self._key)
             pygame.display.flip()
-
-    def update_delta(self, time : time) -> None:
+            
+    def update_delta(self, time: time) -> None:
         Main.delta = time_() - time
 
     def event(self) -> None:
@@ -59,15 +58,12 @@ class Main():
         button = self._display.search_button(button_name, scene_name)
         return button.process_event(event) and button.is_enabled
 
-    def update(self):
+    def update(self) -> None:
         if (self._key == K_ESCAPE and self._is_paused_key_up):
             self._is_paused_key_up = False
-            print(self._display.is_scene_enabled("main"))
             if self._display.is_scene_enabled("main"): 
                 self._display.enable_scene("pause")
             elif self._display.is_scene_enabled("pause"): 
                 self._display.enable_scene("main")
-        self._key == None
-
 
 m=Main()

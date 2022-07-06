@@ -73,10 +73,12 @@ class Display:
         self._surface.blit(object, position)
 
     def update(self, delta_time, key: pygame.key) -> None:
-        print(self._ball._collide)
         self.update_scenes()
+        if self._ball._goal:
+            print(self._human.get_score(), " - ", self._ai.get_score())
+            self._main_scene._labels[0].set_text(str(self._human.get_score()) + " - " + str(self._ai.get_score()))
+            self._ball._goal = False
         self.update_ball_and_players(delta_time, key)
-
 
         #if self._ball.x >= 1600: self._human.update_score()
         #elif self._ball.x == 0: self._ai.update_score()
