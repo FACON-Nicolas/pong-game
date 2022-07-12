@@ -34,7 +34,6 @@ class Main():
             self.event()
             self.update()
             self._display.update(Main.delta, self._key)
-            print(clock.get_fps())
             pygame.display.flip()
             
     def update_delta(self, time: time) -> None:

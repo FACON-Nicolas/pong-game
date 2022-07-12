@@ -31,16 +31,15 @@ class AbstractPlayer(ABC):
         value_to_add = (sens * delta_time * AbstractPlayer.speed)
         if (min <= self._rect.y + value_to_add <= max - self._rect.h): 
             self._rect.y += value_to_add
-        #print(self._rect.y, value_to_add, min, "<=" ,self._rect.y + value_to_add, "<=", max)
 
     def is_collinding_object(self, object: Ball) -> bool:
         rect = object.rect
         if self._rect.x >= 800:
-            is_okay_x = abs(rect.x - self._rect.x+rect.h) <= self._rect.w
-            is_okay_y = abs(rect.y - self._rect.y+rect.w) <= self._rect.h
+            is_okay_x = 0 <= rect.x - self._rect.x+rect.h <= self._rect.w
+            is_okay_y = 0 <= rect.y - self._rect.y+rect.w <= self._rect.h
         else:
             is_okay_x = self._rect.x <= rect.x <= self._rect.x+self._rect.w
-            is_okay_y = self._rect.y <= rect.y <= self._rect.y+self._rect.h
+            is_okay_y = self._rect.y-rect.h <= rect.y <= self._rect.y+self._rect.h
         return is_okay_x and is_okay_y
 
     def center_y(self):
