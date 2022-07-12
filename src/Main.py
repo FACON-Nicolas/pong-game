@@ -21,18 +21,20 @@ class Main():
         self._is_running = True
         self._key = None
         self._is_paused_key_up = True
+        self._is_playing = False
         self.run()
 
     def run(self) -> None:
         clock = pygame.time.Clock()
         t = time_()
         while self._is_running:
-            clock.tick(100)
+            clock.tick(self._display.get_slider("fps").get_current_value())
             self.update_delta(t)
             t = time_()
             self.event()
             self.update()
             self._display.update(Main.delta, self._key)
+            print(clock.get_fps())
             pygame.display.flip()
             
     def update_delta(self, time: time) -> None:
@@ -50,13 +52,19 @@ class Main():
     def button_pressed(self, event: pygame.event) -> None:
         if self.is_okay_button_pressed("QUIT", "menu", event): self._is_running=False
         elif self.is_okay_button_pressed("QUIT", "pause", event): self._is_running=False
-        elif self.is_okay_button_pressed("START", "menu", event): self._display.enable_scene("main")
+        elif self.is_okay_button_pressed("START", "menu", event): self._display.enable_scene("main"); self._is_playing = True
         elif self.is_okay_button_pressed("SETTINGS", "menu", event): self._display.enable_scene("settings")
         elif self.is_okay_button_pressed("RESUME", "pause", event): self._display.enable_scene("main")
+        elif self.is_okay_button_pressed("SETTINGS", "pause", event): self._display.enable_scene("settings")
+        elif self.is_okay_button_pressed("BACK", 'settings', event): self.back_scene_settings()
 
     def is_okay_button_pressed(self, button_name: str, scene_name: str, event: pygame.event) -> bool:
         button = self._display.search_button(button_name, scene_name)
         return button.process_event(event) and button.is_enabled
+
+    def back_scene_settings(self):
+        if self._is_playing: self._display.enable_scene("pause")
+        else: self._display.enable_scene("menu")
 
     def update(self) -> None:
         if (self._key == K_ESCAPE and self._is_paused_key_up):

@@ -37,6 +37,10 @@ class Scene:
             button.enable()
             self._buttons.append(button)
 
+    def add_slider(self, slider: pygame_gui.elements.UIHorizontalSlider) -> None:
+        if slider not in self._sliders:
+            self._sliders.append(slider)
+
     def add_label(self, label: pygame_gui.elements.UILabel) -> None:
         if label not in self._labels:
             self._labels.append(label)
@@ -50,6 +54,7 @@ class Scene:
             infos = json.load(f)
             for b in infos["buttons"]: self.add_button(self.from_str_to_button(b))
             for l in infos['labels']: self.add_label(self.from_str_to_label(l))
+            for s in infos['sliders']: self.add_slider(self.from_str_to_slider(s))
 
     
     def from_str_to_button(self, button_infos: str) -> pygame_gui.elements.UIButton:
@@ -59,7 +64,12 @@ class Scene:
         return button
 
     def from_str_to_slider(self, slider_infos: str) -> pygame_gui.elements.UIHorizontalSlider:
-        pass
+        x, y, w, h, s, e, i, p = [int(i) for i in slider_infos.split(".")]
+        i = i // (10**p)
+        del p
+        start = s if s != 0 else 1
+        print(x, y, w, h, s, e, i)
+        return pygame_gui.elements.UIHorizontalSlider(relative_rect=pygame.Rect((x, y), (w, h)), start_value=start, value_range=(s, e), click_increment=i, manager=self._manager)
 
     def from_str_to_label(self, label_infos: str) -> pygame_gui.elements.UILabel:
         text_, x, y, s, pos, visibility = label_infos.split('.')
