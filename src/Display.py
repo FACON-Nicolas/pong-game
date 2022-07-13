@@ -107,6 +107,5 @@ class Display:
                 self._main_scene._labels[0].set_text(str(self._human.get_score()) + " - " + str(self._ai.get_score()))
                 self._ball._goal = False
                 self._ball.reset(self._ball.rect.x, window)
-                print(self._human.get_score(),'-',self._ai.get_score())
             self._human.update(key, delta_time, 0, self._surface.get_rect().h, self._surface)
             self._ai.update(self._surface, delta_time)

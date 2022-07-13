@@ -38,7 +38,12 @@ class Ball:
         self.show_ball(window)
         if self.collide_wall(): self.bounce()
         if self.collide_player(players): self.bounce(self.collide_player(players))
-        if (self.goal()): self._goal = True
+        if (self.goal()): 
+            for p in players:
+                if p.was_colliding_object(self): 
+                    self.bounce(self.collide_player(players))
+                    return
+            self._goal = True
 
     def collide_wall(self):
         return self.rect.y <= 0 or self.rect.y + self.rect.h >= self._max_y
@@ -51,7 +56,7 @@ class Ball:
         return player
 
     def goal(self):
-        return self.rect.x+self.rect.w < 0 or self.rect.x >= self._max_x
+        return self.rect.x+self.rect.w < 0 or self.rect.x > self._max_x
 
     def bounce(self, player=None):
         if (self.is_collide_okay()):

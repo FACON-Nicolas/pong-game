@@ -42,6 +42,14 @@ class AbstractPlayer(ABC):
             is_okay_y = self._rect.y-rect.h <= rect.y <= self._rect.y+self._rect.h
         return is_okay_x and is_okay_y
 
+    def was_colliding_object(self, object: Ball) -> bool:
+        x, y, vx, vy = object.rect.x, object.rect.y, -object._vx, -object._vy
+        for i in range(1, object._speed+1):
+            object.rect.x, object.rect.y = object.rect.x + vx, object.rect.y + vy
+            if self.is_collinding_object(object): return True
+        object.rect.x, object.rect.y = x, y
+        return False
+
     def center_y(self):
         return self._rect.y + (self._rect.h // 2)
 
