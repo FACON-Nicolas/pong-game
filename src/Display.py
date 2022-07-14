@@ -110,5 +110,6 @@ class Display:
                 self._ball._goal = False
                 self._audio.play_sound('goal')
                 self._ball.reset(self._ball.rect.x, window)
+            if self._ball._hit: self._audio.play_sound('hit'); self._ball._hit = False
             self._human.update(key, delta_time, 0, self._surface.get_rect().h, self._surface)
             self._ai.update(self._surface, delta_time)

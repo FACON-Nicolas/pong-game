@@ -18,7 +18,7 @@ class Ball:
         self._max_y = max_y
         self._collide = None
         self._goal = False
-        self._player = False
+        self._hit = False
 
     def reset(self, x: int, window: pygame.Surface):
         self._vx = 1 if x < window.get_rect().w / 2 else -1
@@ -61,11 +61,11 @@ class Ball:
 
     def bounce(self, player=None):
         if (self.is_collide_okay()):
+            self._hit = True
             if player is None: 
                 self.bounced(0, False)
                 self.set_collide("wall")
             else:
-                self._player = True
                 difference = self.rect.y - player.center_y()
                 self.set_collide("player")
                 self.bounced(difference, True)
