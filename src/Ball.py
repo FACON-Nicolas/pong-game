@@ -18,13 +18,14 @@ class Ball:
         self._max_y = max_y
         self._collide = None
         self._goal = False
+        self._player = False
 
     def reset(self, x: int, window: pygame.Surface):
+        self._vx = 1 if x < window.get_rect().w / 2 else -1
+        self._vy = 1 if x < window.get_rect().h / 2 else -1
         self.rect.x = window.get_rect().w / 2
         self.rect.y = window.get_rect().h / 2
         self._collide = None
-        self._vx = 1 if x < window.get_rect().w / 2 else -1
-        self._vy = 1 if x < window.get_rect().h / 2 else -1
 
     def move(self, delta_time: float):
         self.rect.x += (delta_time * self._vx * self._speed)
@@ -40,7 +41,7 @@ class Ball:
         if self.collide_player(players): self.bounce(self.collide_player(players))
         if (self.goal()): 
             for p in players:
-                if p.was_colliding_object(self): 
+                if p.was_colliding_object(self) and self.is_collide_okay(): 
                     self.bounce(self.collide_player(players))
                     return
             self._goal = True
@@ -64,15 +65,16 @@ class Ball:
                 self.bounced(0, False)
                 self.set_collide("wall")
             else:
+                self._player = True
                 difference = self.rect.y - player.center_y()
                 self.set_collide("player")
                 self.bounced(difference, True)
 
     def is_collide_okay(self):
-        return self._vy <= 0 and self._collide == "down-wall" \
-            or self._vy > 0 and self._collide == "top-wall" \
-            or self._vx <= 0 and self._collide == "right-player" \
-            or self._vx > 0 and self._collide == "left-player"\
+        return (self._vy <= 0 and self._collide == "down-wall")\
+            or (self._vy > 0 and self._collide == "top-wall")\
+            or (self._vx <= 0 and self._collide == "right-player")\
+            or (self._vx > 0 and self._collide == "left-player")\
             or self._collide is None 
 
     def set_wall_collide(self):

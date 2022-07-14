@@ -6,6 +6,7 @@ from ArtificialPlayer import ArtificialPlayer
 from Ball import Ball
 from Human import Human
 from Scene import Scene
+from Audio import Audio
 
 class Display:
 
@@ -24,6 +25,7 @@ class Display:
         self._ball = Ball(800, 425, Ball.DEFAULT_SPEED, 1600, 900)
         self._human = Human()
         self._ai = ArtificialPlayer(self._ball, self._surface)
+        self._audio = Audio(self.get_slider('fx').get_current_value())
         self._menu_scene.enable()
 
     def process(self, event: pygame.surface) -> None:
@@ -36,8 +38,7 @@ class Display:
 
     def get_slider(self, slider_name: str):
         if slider_name == "fx": return self._settings_scene._sliders[0]      
-        if slider_name == "music": return self._settings_scene._sliders[1]      
-        if slider_name == "fps": return self._settings_scene._sliders[2]      
+        if slider_name == "fps": return self._settings_scene._sliders[1]         
 
     def search_button(self, txt: str, scene_name: str) -> pygame_gui.elements.UIButton:
         if scene_name is None: return self._search_button(txt)
@@ -81,6 +82,7 @@ class Display:
     def update(self, delta_time, key: pygame.key) -> None:
         self.update_scenes()
         self.update_ball_and_players(delta_time, key, self._surface)
+        self._audio.update(self.get_slider('fx').get_current_value())
 
         #if self._ball.x >= 1600: self._human.update_score()
         #elif self._ball.x == 0: self._ai.update_score()
@@ -106,6 +108,7 @@ class Display:
                 elif self._ball.rect.x >= window.get_rect().w-self._ball.rect.w: self._human.update_score()
                 self._main_scene._labels[0].set_text(str(self._human.get_score()) + " - " + str(self._ai.get_score()))
                 self._ball._goal = False
+                self._audio.play_sound('goal')
                 self._ball.reset(self._ball.rect.x, window)
             self._human.update(key, delta_time, 0, self._surface.get_rect().h, self._surface)
             self._ai.update(self._surface, delta_time)
