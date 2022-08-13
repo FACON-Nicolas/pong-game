@@ -3,7 +3,7 @@
 This repository is composed by a pong game source code.
 The game is a beta version, many bugs are still present and the project needs a new conception for a cleaner code
 
-<center><img src="https://i.ibb.co/tYJ7Fd7/pong-main.png"></center>
+![](https://github.com/FACON-Nicolas/FACON-Nicolas/raw/main/resources/pong.gif?raw=true)
 
 # Summary
 
@@ -25,15 +25,16 @@ The game is a beta version, many bugs are still present and the project needs a 
 + ## Scene maker 
 
 The script called [Scene.py](src/Scene.py) could make a scene with a little json file, here this is the settings scene: 
-<center><img src="https://i.ibb.co/TcpDdT3/json-file.png" alt="json-file" border="0"></center>
 
-<img src="https://i.ibb.co/M6LbZYK/setting-scene.png" alt="setting-scene" border="0"><br/>
+![](https://i.ibb.co/TcpDdT3/json-file.png)
+
+![](https://i.ibb.co/M6LbZYK/setting-scene.png)
 
 + ## Settings scene
 
 The settings scene could controls the framerate and the game volume : 
 
-<img src="https://i.ibb.co/M6LbZYK/setting-scene.png" alt="setting-scene" border="0"><br/>
+![](https://i.ibb.co/M6LbZYK/setting-scene.png)
 
 # Install
 
@@ -52,10 +53,10 @@ soon..
 
 The game contains many inputs to be playable, they are specified here: 
 
-| inputs | actions |
-| :----: | :-----: |
-|  DOWN  | move down |
-| UP     | move up |
+| inputs |    actions     |
+| :----: | :------------: |
+|  DOWN  |    move down   |
+|   UP   |     move up    |
 | ESCAPE | pause / resume |
 
 # Versions
