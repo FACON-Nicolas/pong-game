@@ -1,5 +1,12 @@
 # pong-game
 
+![](https://img.shields.io/badge/Release-v1.0-blueviolet)
+![](https://img.shields.io/badge/Language-python-005255)
+![](https://img.shields.io/badge/Libraries-pygame-00cfff)
+![](https://img.shields.io/badge/Libraries-pygame__gui-00cfff)
+![](https://img.shields.io/badge/Size-10.7Mo-f12222)
+![](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)
+
 This repository is composed by a pong game source code.
 The game is a beta version, many bugs are still present and the project needs a new conception for a cleaner code
 
