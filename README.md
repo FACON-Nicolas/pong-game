@@ -17,8 +17,8 @@ The game is a beta version, many bugs are still present and the project needs a 
 * **[Summary](#summary)**
 * **[Credits](#credits)**
 * **[Features](#features)**
-* **[Install](#install)**
 * **[Pre-requisites](#prerequisites)**
+* **[Install](#install)**
 * **[Releases](#releases)**
 * **[Inputs](#inputs)**
 * **[Versions](#versions)**
