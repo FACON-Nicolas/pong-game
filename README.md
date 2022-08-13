@@ -43,18 +43,36 @@ The settings scene could controls the framerate and the game volume :
 
 ![](https://i.ibb.co/M6LbZYK/setting-scene.png)
 
-# Install
-
-To install the game, Click **[here]()**, this is a link to the game releases.
-
 # Prerequisites
 
- + **Windows**: python 3
- + **Linux** : -
+ + Windows
+    - **[Python](https://www.python.org/downloads/)**
+    - **[Git Bash](https://gitforwindows.org/)**
+    - **pygame** (``py -3.8 -m pip install pygame`` in your terminal)
+    - **pygame_gui** (``py -3.8 -m pip install pygame_gui`` in your terminal)
 
-# Releases
+ + Linux:
+ 
+    write this in terminal 
+    ```sh
+    #if python is not installed yet.
+    sudo apt install python3.8
+    #if pygame is not installed yet.
+    pip install pygame
+    #if pygame_gui is not installed yet.
+    pip install pygame_gui
+    ```
 
-soon..
+# Install
+
+To install the game, write this in your terminal or git bash terminal 
+
+```sh
+git clone https://github.com/FACON-Nicolas/pong-game
+cd pong-game/
+#python3 or py on windows
+python3 src/Main.py
+```
 
 # Inputs
 
